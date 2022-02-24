@@ -1,12 +1,13 @@
 <template>
      <div class="main-container" >
       <div class="location" id="home">
-          <h1 id="home">Popular on Netflix</h1>
+          <h1 id="home">video queue</h1>
           <div class="box">
-           
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p1.PNG?raw=true" alt=""></a>
-            <a href=""><img src="https://github.com/carlosavilae/Netflix-Clone/blob/master/img/p2.PNG?raw=true" alt=""></a>
-           
+            <MovieBox
+             v-for="box in items"
+            :key="box['id']"
+            :details="box"
+            />
           </div>
       </div>
       
@@ -20,11 +21,25 @@
 </template>
 
 <script>
+import MovieBox from '@/components/MovieBox.vue'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
+  },
+  data() {
+    return {
+      items: null,
+      
+    };
+  },
+  async mounted() {
+      let data = await this.$store.getters.getGrpc.getFiles()
+      this.items =data.array[0]
+  },
+  components: {
+    MovieBox,
+  },
 }
 </script>
 

@@ -16,7 +16,7 @@ protoc -I=. helloworld.proto --js_out=import_style=commonjs:generated --grpc-web
 protoc -I=. helloworld.proto --js_out=import_style=commonjs,binary:. --grpc-web_out=import_style=commonjs,mode=grpcwebtext:.
 ```
 ```sh
-protoc -I=. helloworld.proto   --js_out=import_style=commonjs,binary:./ad-broadcaster/src   --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./ad-broadcaster/src & cp helloworld.proto ./ad-broadcaster/src/helloworld.proto
+protoc -I=. helloworld.proto   --js_out=import_style=commonjs,binary:./frontend/src   --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./frontend/src & cp helloworld.proto ./frontend/src/helloworld.proto
 ```
 ```sh
 docker run -d -v "$(pwd)"/envoy.yaml:/etc/envoy/envoy.yaml:ro     --network=host envoyproxy/envoy:v1.20.0

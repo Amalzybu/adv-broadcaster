@@ -46,7 +46,8 @@ message ItemResponse {
 }
 message Item {
   int32 id = 1;
-  string name = 2;
+  string title = 2;
+  string content = 3;
 }
 
 

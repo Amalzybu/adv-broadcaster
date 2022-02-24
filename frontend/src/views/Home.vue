@@ -7,12 +7,10 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
-import VueSkeletonLoader from 'skeleton-loader-vue';
 export default {
   name: 'Home',
   components: {
     HelloWorld,
-    VueSkeletonLoader
   },
   data () {
     return {
@@ -21,8 +19,6 @@ export default {
   },
   async mounted () {
    let data = await this.$store.getters.getGrpc.getFiles()
-   console.log("dddddddd "+JSON.stringify(data.array[0]))
-
   
   }
 
