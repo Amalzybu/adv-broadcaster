@@ -22,6 +22,7 @@
  var busboy = require('connect-busboy');
  var fs = require('fs-extra');
  var ffmpeg = require('fluent-ffmpeg');
+ const ThumbnailGenerator = require('video-thumbnail-generator').default;
  
  const port = 8888
  
@@ -137,7 +138,11 @@
  
  //******************EXPRESS PART *************//
  app.use(cors({ origin: '*'}));
- 
+
+ app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname+"/public/dist", '/index.html'));
+});
+
  app.route('/upload-video')
      .post(function (req, res, next) {
  
@@ -154,26 +159,51 @@
                  console.log("Upload Finished of " + filename);  
                  var datetime = new Date(); 
                  let r = (Math.random() + 1).toString(36).substring(7);           
-                 // res.redirect('back');           //where to go next
-                 var proc = await new ffmpeg('public/'+filename)
-                 .takeScreenshots({
-                     count: 1,
-                     timemarks: [ '600' ] // number of seconds
-                   }, 'public/thumbnail/'+r,  function(err) {
-                   console.log('screenshots were saved')
-                  
-                 });
-                 const contents = await fs.readFile('public/thumbnail/'+r+'/tn.png', {encoding: 'base64'});
-                //  const post = await prisma.post.create({
-                //   data: {
-                //     createdAt:datetime,
-                //     updatedAt:datetime,
-                //     title: filename,
-                //     content: contents,
-                //     published:true,
-                //     authorId:1
-                //   },
-                // })
+  
+
+
+                const tg = new ThumbnailGenerator({
+                  sourcePath: 'public/'+filename,
+                  thumbnailPath: 'public/thumbnail/',
+                  tmpDir: 'public/thumbnail/' //only required if you can't write to /tmp/ and you need to generate gifs
+                });
+
+                tg.generateOneByPercentCb(90, async function(err, result){
+                  console.log(typeof result);
+                  const contents = "data:image/png;base64,"+await fs.readFile('public/thumbnail/'+result, {encoding: 'base64'});
+                  const post = await prisma.post.create({
+                    data: {
+                      createdAt:datetime,
+                      updatedAt:datetime,
+                      title: filename,
+                      content: contents,
+                      published:true,
+                      authorId:1
+                    },
+                  })
+
+                  var inputURL ="public/"+filename
+                  var proc3 = new ffmpeg({ source: inputURL})
+                    .addOption('-c:v copy')
+                    .addOption('-c:a aac')
+                    .addOption('-ar', 44100)
+                    .addOption('-ac', '1')
+                    .addOption('-f', 'flv')
+                    .on('start', function(commandLine) {
+                    console.log('Query : ' + commandLine);
+                    })
+                    .on('error', function(err) {
+                    console.log('Error: ' + err.message);
+                    })
+                    .on('end', function (err, stdout, stderr) {
+                      console.log('Finished processing!' /*, err, stdout, stderr*/)
+                    })
+                    .output('rtmp://x.rtmp.youtube.com/live2/xukh-g1dv-pe36-xh5h-f5ys', function(stdout, stderr) {
+                      console.log('Convert complete' +stdout)
+                    })
+                    .run()
+                });
+                // 
                  
                  
                  
@@ -184,7 +214,9 @@
      });
  
  app.listen(port, async function() {
-   console.log(`Example app listening on port ${port}`)
+
+   console.log(`${__dirname}gdfgdf Example app listening on port ${port}`)
+   
    
  
    

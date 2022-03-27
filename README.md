@@ -24,3 +24,6 @@ docker run -d -v "$(pwd)"/envoy.yaml:/etc/envoy/envoy.yaml:ro     --network=host
 ```sh
 npx webpack --entry ./client.js  --output-path ./grpc --output-filename index.js
 ```
+```sh
+ffmpeg -re -i "Introducing App Platform by DigitalOcean-iom_nhYQIYk.mkv" -c:v copy -c:a aac -ar 44100 -ac 1 -f flv rtmp://localhost/live/stream
+```

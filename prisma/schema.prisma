@@ -28,6 +28,8 @@ model Post {
 
   authorId  Int
 
+  @@index([id])
+
 }
 
 

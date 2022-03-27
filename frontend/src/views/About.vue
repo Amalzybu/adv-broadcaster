@@ -54,6 +54,7 @@
 					Initialize the form data
 				*/
 				let formData = new FormData();
+				let that = this
 				/*
 					Iterate over any file sent over appending the files
 					to the form data.
@@ -73,10 +74,10 @@
 						}
 					}
 				).then(function(){
-					console.log('SUCCESS!!');
+					that.$swal('Successfull!','uploaded successfully!','success');
 				})
 				.catch(function(){
-					console.log('FAILURE!!');
+					that.$swal('failed!','upload failed','fail');
 				});
 			},
 			/*

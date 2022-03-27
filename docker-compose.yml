@@ -1,0 +1,26 @@
+services:
+  envoy:
+    image: amalnull/envoy_proxy:tagname
+    network_mode: "host"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+  backend_node:
+    build: .
+    container_name: node-application
+    restart: always
+    command: 'nodemon server.js'
+    network_mode: "host"
+    volumes:
+      - .:/code
+      - /code/node_modules
+  front_node:
+      build: frontend
+      container_name: node-frontend-application
+      restart: always
+      command: 'npm run serve'
+      network_mode: "host"
+      volumes:
+        - ./vuejs:/project/frontend
+        - /project/node_modules
+
+  
