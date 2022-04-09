@@ -5,6 +5,10 @@ WORKDIR /code
 
 RUN apk add  --no-cache ffmpeg
 
+# RUN apk --update add redis 
+
+# CMD [ "redis-server" ]
+
 RUN npm install -g nodemon
 
 COPY . /code/

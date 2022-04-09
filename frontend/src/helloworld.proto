@@ -23,6 +23,7 @@ service Greeter {
   rpc SayRepeatHello(RepeatHelloRequest) returns (stream HelloReply);
 
   rpc GetItem (ItemQuery) returns (ItemResponse) {}
+
 }
 
 message HelloRequest {
@@ -49,5 +50,4 @@ message Item {
   string title = 2;
   string content = 3;
 }
-
 

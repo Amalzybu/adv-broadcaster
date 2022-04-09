@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "nodemon --exec vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -17,6 +17,7 @@
     "vue-simple-uploader": "^0.7.6",
     "vue-sweetalert2": "^5.0.2",
     "vuejs-uploader": "^0.6.5",
+    "vuesax": "^4.0.1-alpha.25",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
@@ -27,7 +28,6 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
-    "bootstrap": "^4.0.0-beta",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",

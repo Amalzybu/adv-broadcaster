@@ -8,7 +8,15 @@ WORKDIR /project
 COPY . /project/
 
 WORKDIR /project
+
+RUN npm install -g nodemon
+
+RUN npm install -g webpack-cli
+
 RUN npm install
+
+
+
 ENV HOST=0.0.0.0
 # CMD ["yarn", "run", "serve"]
 

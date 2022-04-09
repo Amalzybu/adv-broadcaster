@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+	  
     <div class="large-12 medium-12 small-12 cell">
 			<h2>Select Files</h2>
 			<hr/>
